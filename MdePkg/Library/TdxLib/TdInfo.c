@@ -42,6 +42,7 @@ GetTdInfo (
   Status = TdCall (TDCALL_TDINFO, 0, 0, 0, &TdReturnData);
   if (Status == TDX_EXIT_REASON_SUCCESS) {
     Gpaw              = (UINT8)(TdReturnData.TdInfo.Gpaw & 0x3f);
+    Gpaw              = 48; // fix GPAW for SDV emulation
     mTdSharedPageMask = 1ULL << (Gpaw - 1);
     mTdMaxVCpuNum     = TdReturnData.TdInfo.MaxVcpus;
     mTdVCpuNum        = TdReturnData.TdInfo.NumVcpus;
