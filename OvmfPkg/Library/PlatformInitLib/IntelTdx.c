@@ -82,6 +82,7 @@ static UINT8 MAGIC_TDHOBLIST[] = {
   0xff, 0xff                                        // 0188
 };
 
+kAFL_payload *kafl_payload;
 
 /**
   This function will be called to accept pages. Only BSP accepts pages.
@@ -603,6 +604,11 @@ ProcessTdxHobList (
     return Status;
   }
 
+  // taking just PAYLOAD_MAX_SIZE results in strange bugs?!
+  UINT8 payload_buffer[2*PAYLOAD_MAX_SIZE] __attribute__((aligned(4096)));
+  kafl_payload = (kAFL_payload*)payload_buffer;
+
+
   DEBUG ((
     DEBUG_INFO,
     "Intel Tdx Started with (GPAW: %d, Cpus: %d)\n",
@@ -610,13 +616,19 @@ ProcessTdxHobList (
     TdReturnData.TdInfo.NumVcpus
     ));
   
+  DEBUG ((EFI_D_INFO,
+    "Tdx code space: 0x%lx, 0x%lx, 0x%lx, 0x%lx\n",
+    (UINTN)ProcessTdxHobList,
+    (UINTN)ValidateHobList,
+    (UINTN)ProcessHobList,
+    (UINTN)hprintf));
+
   //
   // Hardcode TdHobList for SDV environment
   // Since this is before library constructors are called,
   // we use a loop rather than CopyMem.
   //
-  //? does TdHob space need to be allocated?
-  // CopyMem(TdHob, MAGIC_TDHOBLIST, sizeof(MAGIC_TDHOBLIST));
+#ifndef KAFL_ENABLE
   for (UINTN byte = 0; byte < sizeof(MAGIC_TDHOBLIST); byte++)
   {
     ((UINT8 *) TdHob)[byte] = MAGIC_TDHOBLIST[byte];
@@ -626,6 +638,59 @@ ProcessTdxHobList (
   // Dump HobList if DEBUG enabled
   //
   DumpTdHobList(TdHob);
+#endif
+
+  // ensure payload is paged in?
+  // Since this is before library constructors are called,
+  // we use a loop rather than CopyMem.
+  //
+  for (UINTN byte = 0; byte < 2*PAYLOAD_MAX_SIZE; byte++)
+  {
+    payload_buffer[byte] = 0;
+  }
+
+  kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0);
+  kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+
+  volatile host_config_t host_config;
+  kAFL_hypercall(HYPERCALL_KAFL_GET_HOST_CONFIG, (UINTN)&host_config);
+  if (host_config.host_magic != NYX_HOST_MAGIC ||
+      host_config.host_version != NYX_HOST_VERSION)
+  {
+    hprintf("host_config magic/version mismatch!\n");
+    habort("GET_HOST_CNOFIG magic/version mismatch!\n");
+  }
+
+  if (PAYLOAD_MAX_SIZE < host_config.payload_buffer_size)
+  {
+    habort("Insufficient guest payload buffer!\n");
+  }
+
+  /* submit agent configuration */
+  volatile agent_config_t agent_config = {0};
+  agent_config.agent_magic = NYX_AGENT_MAGIC;
+  agent_config.agent_version = NYX_AGENT_VERSION;
+
+  agent_config.agent_tracing = 0; // trace by host!
+  agent_config.agent_ijon_tracing = 0; // no IJON
+  agent_config.agent_non_reload_mode = 1; // allow persistent
+  agent_config.coverage_bitmap_size = host_config.bitmap_size;
+
+  kAFL_hypercall(HYPERCALL_KAFL_SET_AGENT_CONFIG, (UINTN)&agent_config);
+
+  kAFL_hypercall(HYPERCALL_KAFL_GET_PAYLOAD, (UINTN)payload_buffer);
+
+  kAFL_hypercall(HYPERCALL_KAFL_NEXT_PAYLOAD, 0);
+  kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0);
+
+  // Copy payload into Hoblist
+  // Since this is before library constructors are called,
+  // we use a loop rather than CopyMem.
+  //
+  for (UINTN byte = 0; byte < kafl_payload->size; byte++)
+  {
+    ((UINT8 *) TdHob)[byte] = kafl_payload->data[byte];
+  }
 
   //
   // Validate HobList
@@ -768,6 +833,13 @@ PlatformTdxPublishRamRegions (
   }
 
   TransferTdxHobList ();
+
+  if (kafl_payload->size <= 0.9*sizeof(MAGIC_TDHOBLIST)) {
+	  // signal STARVED input
+	  kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 1);
+  } else {
+	  kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+  }
 
   //
   // The memory region defined by PcdOvmfSecGhcbBackupBase is pre-allocated by

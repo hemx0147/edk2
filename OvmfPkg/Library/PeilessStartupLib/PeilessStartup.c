@@ -242,6 +242,7 @@ PeilessStartup (
   // Load the DXE Core and transfer control to it.
   // Only DxeFV is in the compressed section.
   //
+  kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
   Status = DxeLoadCore (1);
 
   //
