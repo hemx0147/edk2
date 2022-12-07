@@ -19,6 +19,8 @@ EFIAPI
 TdIsEnabled (
   )
 {
+  return TRUE;
+
   UINT32                  Eax;
   UINT32                  Ebx;
   UINT32                  Ecx;

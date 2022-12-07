@@ -61,15 +61,13 @@ SecCoreStartupWithStack (
   UINT32                Index;
   volatile UINT8        *Table;
 
-  if (CcProbe () == CcGuestTypeIntelTdx) {
-    //
-    // For Td guests, the memory map info is in TdHobLib. It should be processed
-    // first so that the memory is accepted. Otherwise access to the unaccepted
-    // memory will trigger tripple fault.
-    //
-    if (ProcessTdxHobList () != EFI_SUCCESS) {
-      CpuDeadLoop ();
-    }
+  //
+  // For Td guests, the memory map info is in TdHobLib. It should be processed
+  // first so that the memory is accepted. Otherwise access to the unaccepted
+  // memory will trigger tripple fault.
+  //
+  if (ProcessTdxHobList () != EFI_SUCCESS) {
+    CpuDeadLoop ();
   }
 
   //
@@ -119,13 +117,11 @@ SecCoreStartupWithStack (
   //
   AsmWriteIdtr (&IdtDescriptor);
 
-  if (CcProbe () == CcGuestTypeIntelTdx) {
-    //
-    // InitializeCpuExceptionHandlers () should be called in Td guests so that
-    // #VE exceptions can be handled correctly.
-    //
-    InitializeCpuExceptionHandlers (NULL);
-  }
+  //
+  // InitializeCpuExceptionHandlers () should be called in Td guests so that
+  // #VE exceptions can be handled correctly.
+  //
+  InitializeCpuExceptionHandlers (NULL);
 
   DEBUG ((
     DEBUG_INFO,

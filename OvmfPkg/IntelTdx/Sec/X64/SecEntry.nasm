@@ -45,7 +45,7 @@ ASM_PFX(_ModuleEntryPoint):
     ;
     %define OVMF_WORK_AREA        FixedPcdGet32 (PcdOvmfWorkAreaBase)
     %define VM_GUEST_TYPE_TDX     2
-    mov     eax, OVMF_WORK_AREA
+    mov     eax, VM_GUEST_TYPE_TDX
     cmp     byte[eax], VM_GUEST_TYPE_TDX
     jne     InitStack
 
