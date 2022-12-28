@@ -114,7 +114,7 @@ TdAccept: 0x820000 - 0x3F7E0000
    Page : 0x200000
 RegisterHashInterfaceLib
 	Hash is registered. guid = EFA96432-DE33-4DD2-AEE6-328C33DF777A
-	hash init: 0xFFFCE2EE, update: 0xFFFCDC4A, final: 0xFFFCD97E
+	hash init: 0xFFFCE49F, update: 0xFFFCDC4A, final: 0xFFFCD97E
 SecCoreStartupWithStack(0xFFFCC000, 0x820000)
 Tdx started with(Hob: 0x809000, Gpaw: 0x27, Cpus: 1)
 LowMemory Start and End: 820000, 40000000
@@ -122,4 +122,4 @@ HobList: 820000
 Creating TdTcg2PcrEvent PCR[1]/RTMR[0] EventType 0x8000000B
 HashAndExtend
 	MR = 0, DataPtr = 809000, DataLen = 0x188
-ASSERT [SecMain] /home/ubuntu/tdvfuzz/tdvf/SecurityPkg/Library/HashLibTdx/HashLibTdx.c(46): ((BOOLEAN)(0==1))
+ASSERT [SecMain] /home/ubuntu/tdvfuzz/tdvf/SecurityPkg/Library/HashLibTdx/HashLibTdx.c(166): ((BOOLEAN)(0==1))
