@@ -156,6 +156,10 @@ HashAndExtend (
 {
   HASH_HANDLE  HashHandle;
   EFI_STATUS   Status;
+  UINTN        Index;
+
+  DEBUG((DEBUG_INFO, "Td: HashAndExtend: MR = %d, DataPtr = %p, DataLen = 0x%x\n",
+    PcrIndex, DataToHash, DataToHashLen));
 
   if (mHashInterfaceCount == 0) {
     ASSERT (FALSE);
@@ -167,6 +171,17 @@ HashAndExtend (
   HashStart (&HashHandle);
   HashUpdate (HashHandle, DataToHash, DataToHashLen);
   Status = HashCompleteAndExtend (HashHandle, PcrIndex, NULL, 0, DigestList);
+
+  DEBUG((DEBUG_INFO, "Td: HashAndExtend: MR = %d, DataPtr = %p, DataLen = 0x%x, Status = %r\n",
+    PcrIndex, DataToHash, DataToHashLen, Status));
+
+  if (!EFI_ERROR (Status)) {
+    DEBUG ((DEBUG_INFO, "  Digest (0x%x): ", DigestList->digests[0].hashAlg));
+    for (Index = 0; Index < 16; Index++) {
+      DEBUG ((DEBUG_INFO, "%02x ", (UINTN)DigestList->digests[0].digest.sha384[Index]));
+    }
+    DEBUG ((DEBUG_INFO, "... ...\n"));
+  }
 
   return Status;
 }
@@ -186,6 +201,7 @@ RegisterHashInterfaceLib (
   IN HASH_INTERFACE  *HashInterface
   )
 {
+  DEBUG ((DEBUG_INFO, "RegisterHashInterfaceLib\n"));
   //
   // HashLibTdx is designed for Tdx guest. So if it is not Tdx guest,
   // return EFI_UNSUPPORTED.
@@ -201,6 +217,9 @@ RegisterHashInterfaceLib (
     return EFI_UNSUPPORTED;
   }
 
+  DEBUG((DEBUG_INFO, "\tTD: Hash is registered. guid = %g\n", HashInterface->HashGuid));
+  DEBUG ((DEBUG_INFO, "\thash init: 0x%p, update: 0x%p, final: 0x%p\n",
+    HashInterface->HashInit, HashInterface->HashUpdate, HashInterface->HashFinal));
   if (mHashInterfaceCount != 0) {
     ASSERT (FALSE);
     return EFI_OUT_OF_RESOURCES;
@@ -208,6 +227,8 @@ RegisterHashInterfaceLib (
 
   CopyMem (&mHashInterface, HashInterface, sizeof (*HashInterface));
   mHashInterfaceCount++;
+
+  DEBUG ((DEBUG_INFO, "RegisterHashInterfaceLib mHashInterFaceCount: %d\n", mHashInterfaceCount));
 
   return EFI_SUCCESS;
 }
