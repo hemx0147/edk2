@@ -522,11 +522,13 @@ DumpTdHobList(
         DEBUG((DEBUG_INFO, "  EFI_HOB_HANDOFF_INFO_TABLE\n"));
         DEBUG((DEBUG_INFO, "    Version: %"PRIu32"\n", Hob.HandoffInformationTable->Version));
         DEBUG((DEBUG_INFO, "    BootMode: %"PRIu32"\n", Hob.HandoffInformationTable->BootMode));
-        DEBUG((DEBUG_INFO, "    EfiMemoryTop: 0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiMemoryTop));
-        DEBUG((DEBUG_INFO, "    EfiMemoryBottom: 0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiMemoryBottom));
-        DEBUG((DEBUG_INFO, "    EfiFreeMemoryTop: 0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiFreeMemoryTop));
+        DEBUG((DEBUG_INFO, "    EfiMemoryTop:        0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiMemoryTop));
+        DEBUG((DEBUG_INFO, "    EfiMemoryBottom:     0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiMemoryBottom));
+        DEBUG((DEBUG_INFO, "    EfiFreeMemoryTop:    0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiFreeMemoryTop));
         DEBUG((DEBUG_INFO, "    EfiFreeMemoryBottom: 0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiFreeMemoryBottom));
-        DEBUG((DEBUG_INFO, "    EfiEndOfHobList: 0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiEndOfHobList));
+        DEBUG((DEBUG_INFO, "    StartOfHobList:      0x%"PRIx64"\n", &Hob));
+        DEBUG((DEBUG_INFO, "    EfiEndOfHobList:     0x%"PRIx64"\n", Hob.HandoffInformationTable->EfiEndOfHobList));
+        DEBUG((DEBUG_INFO, "    HandOffInfoTable:    0x%"PRIx64"\n", Hob.HandoffInformationTable));
         break;
       case EFI_HOB_TYPE_RESOURCE_DESCRIPTOR:
         DEBUG((DEBUG_INFO, "  EFI_HOB_MEMORY_ALLOCATION\n"));
