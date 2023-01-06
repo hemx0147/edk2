@@ -1,0 +1,205 @@
+Intel Tdx Started with (GPAW: 39, Cpus: 1)
+Dump TdHobList
+  [1] Type: 1, Length: 56
+  EFI_HOB_HANDOFF_INFO_TABLE
+    Version: 9
+    BootMode: 0
+    EfiMemoryTop:        0x0
+    EfiMemoryBottom:     0x0
+    EfiFreeMemoryTop:    0x0
+    EfiFreeMemoryBottom: 0x0
+    StartOfHobList:      0x81FCD0
+    EfiEndOfHobList:     0x809190
+    HandOffInfoTable:    0x809000
+  [2] Type: 3, Length: 48
+  EFI_HOB_MEMORY_ALLOCATION
+    Owner: 
+    ResourceType: 7 (EFI_RESOURCE_MEMORY_UNACCEPTED)
+    ResourceAttribute: 7
+    PhysicalStart: 0x0
+    ResourceLength: 8388608 (0x800000)
+  [3] Type: 3, Length: 48
+  EFI_HOB_MEMORY_ALLOCATION
+    Owner: 
+    ResourceType: 0 (EFI_RESOURCE_SYSTEM_MEMORY)
+    ResourceAttribute: 7
+    PhysicalStart: 0x800000
+    ResourceLength: 24576 (0x6000)
+  [4] Type: 3, Length: 48
+  EFI_HOB_MEMORY_ALLOCATION
+    Owner: 
+    ResourceType: 7 (EFI_RESOURCE_MEMORY_UNACCEPTED)
+    ResourceAttribute: 7
+    PhysicalStart: 0x806000
+    ResourceLength: 20480 (0x5000)
+  [5] Type: 3, Length: 48
+  EFI_HOB_MEMORY_ALLOCATION
+    Owner: 
+    ResourceType: 0 (EFI_RESOURCE_SYSTEM_MEMORY)
+    ResourceAttribute: 7
+    PhysicalStart: 0x80B000
+    ResourceLength: 8192 (0x2000)
+  [6] Type: 3, Length: 48
+  EFI_HOB_MEMORY_ALLOCATION
+    Owner: 
+    ResourceType: 7 (EFI_RESOURCE_MEMORY_UNACCEPTED)
+    ResourceAttribute: 7
+    PhysicalStart: 0x80D000
+    ResourceLength: 12288 (0x3000)
+  [7] Type: 3, Length: 48
+  EFI_HOB_MEMORY_ALLOCATION
+    Owner: 
+    ResourceType: 0 (EFI_RESOURCE_SYSTEM_MEMORY)
+    ResourceAttribute: 7
+    PhysicalStart: 0x810000
+    ResourceLength: 65536 (0x10000)
+  [8] Type: 3, Length: 48
+  EFI_HOB_MEMORY_ALLOCATION
+    Owner: 
+    ResourceType: 7 (EFI_RESOURCE_MEMORY_UNACCEPTED)
+    ResourceAttribute: 7
+    PhysicalStart: 0x820000
+    ResourceLength: 1065222144 (0x3F7E0000)
+
+ResourceType: 0x7
+ResourceAttribute: 0x7
+PhysicalStart: 0x0
+ResourceLength: 0x800000
+Owner: 00000000-0000-0000-0000-000000000000
+
+TdAccept: 0x0 - 0x800000
+   Part1: 0x0 - 0x0
+   Part2: 0x0 - 0x800000
+   Part3: 0x0 - 0x0
+   Page : 0x200000
+
+ResourceType: 0x0
+
+ResourceType: 0x7
+ResourceAttribute: 0x7
+PhysicalStart: 0x806000
+ResourceLength: 0x5000
+Owner: 00000000-0000-0000-0000-000000000000
+
+TdAccept: 0x806000 - 0x5000
+   Part1: 0x806000 - 0x5000
+   Part2: 0x0 - 0x0
+   Part3: 0x0 - 0x0
+   Page : 0x200000
+
+ResourceType: 0x0
+
+ResourceType: 0x7
+ResourceAttribute: 0x7
+PhysicalStart: 0x80D000
+ResourceLength: 0x3000
+Owner: 00000000-0000-0000-0000-000000000000
+
+TdAccept: 0x80D000 - 0x3000
+   Part1: 0x80D000 - 0x3000
+   Part2: 0x0 - 0x0
+   Part3: 0x0 - 0x0
+   Page : 0x200000
+
+ResourceType: 0x0
+
+ResourceType: 0x7
+ResourceAttribute: 0x7
+PhysicalStart: 0x820000
+ResourceLength: 0x3F7E0000
+Owner: 00000000-0000-0000-0000-000000000000
+
+TdAccept: 0x820000 - 0x3F7E0000
+   Part1: 0x820000 - 0x1E0000
+   Part2: 0xA00000 - 0x3F600000
+   Part3: 0x0 - 0x0
+   Page : 0x200000
+RegisterHashInterfaceLib
+	Hash is registered. guid = EFA96432-DE33-4DD2-AEE6-328C33DF777A
+	hash init: 0xFFFCE49F, update: 0xFFFCDC4A, final: 0xFFFCD97E
+SecCoreStartupWithStack(0xFFFCC000, 0x820000)
+Tdx started with(Hob: 0x809000, Gpaw: 0x27, Cpus: 1)
+LowMemory Start and End: 820000, 40000000
+HobList: 820000
+Creating TdTcg2PcrEvent PCR[1]/RTMR[0] EventType 0x8000000B
+HashAndExtend
+	MR = 0, DataPtr = 809000, DataLen = 0x188
+	MR = 0, DataPtr = 809000, DataLen = 0x188, Status = Success
+  Digest (0xC): 75 2C A6 89 4A 1F 8A 6F 22 29 40 FE EF BD 45 D2 ... ...
+Creating TdTcg2PcrEvent PCR[1]/RTMR[0] EventType 0x8000000A
+HashAndExtend
+	MR = 0, DataPtr = FFC00000, DataLen = 0x84000
+	MR = 0, DataPtr = FFC00000, DataLen = 0x84000, Status = Success
+  Digest (0xC): 34 4B C5 1C 98 0B A6 21 AA A0 0D A3 ED 74 36 F7 ... ...
+InitializePlatform in Pei-less boot
+CMOS:
+00: 35 00 54 00 09 00 06 06 01 23 26 02 00 80 00 00
+10: 00 00 00 00 06 80 02 FF FF 00 00 00 00 00 00 00
+20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+30: FF FF 20 00 00 3F 00 20 30 00 00 00 00 12 00 00
+40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+HostBridgeDeviceId = 0x1237
+Select Item: 0x19
+Select Item: 0x19
+Select Item: 0x25
+Select Item: 0x0
+FW CFG Signature: 0x554D4551
+Select Item: 0x1
+FW CFG Revision: 0x3
+QemuFwCfg interface is supported.
+Select Item: 0x19
+Select Item: 0x19
+PlatformAddressWidthFromCpuid: Signature: 'GenuineIntel', PhysBits: 40, QemuQuirk: On, Valid: No
+PhysMemAddressWidth=0x34, Pci64Base=0x800000000, Pci64Size=0x800000000
+Select Item: 0x0
+FW CFG Signature: 0x554D4551
+Select Item: 0x1
+FW CFG Revision: 0x3
+QemuFwCfg interface is supported.
+Select Item: 0x5
+PlatformMaxCpuCountInitialization: BootCpuCount=1 MaxCpuCount=1
+MaxCpuCount=1, BootCpuCount=1
+Select Item: 0x19
+Select Item: 0x25
+Select Item: 0x19
+Select Item: 0x25
+Uc32Base = 0x80000000, Uc32Size = 0x80000000, LowerMemorySize = 0x40000000
+Reserved variable store memory: 0x3FF7C000; size: 528kb
+Select Item: 0x19
+Select Item: 0x25
+Select Item: 0x0
+FW CFG Signature: 0x554D4551
+Select Item: 0x1
+FW CFG Revision: 0x3
+QemuFwCfg interface is supported.
+Select Item: 0x19
+SecFv : FFFCC000, 0x34000
+DxeFv : FFC84000, 0x348000
+Loading DXE CORE at 0x0003E73A000 EntryPoint=0x0003E742085
+BaseOfStack=0x3E71A000, TopOfStack=0x3E739FF0
+AddressBits=52 5LevelPaging=0 1GPage=0 
+Pml5=16 Pml4=512 Pdp=512 TotalPage=4202512
+AllocatePageTableMemory. PageTablePool=0, Pages=4202512
+InitializePageTablePool PoolPages=4202512
+!!!! X64 Exception Type - 0E(#PF - Page-Fault)  CPU Apic ID - 00000000 !!!!
+ExceptionData - 0000000000000002  I:0 R:0 U:0 W:1 P:0 PK:0 SS:0 SGX:0
+RIP  - 00000000FFFD25D3, CS  - 0000000000000018, RFLAGS - 0000000000010046
+RAX  - 0000000000000000, RCX - 0000000000000000, RDX - 0000000000000004
+RBX  - 000000000081FBF8, RSP - 000000000081FAB0, RBP - 0000000000402010
+RSI  - 000000000081FBF8, RDI - 0000000000402010
+R8   - 0000000000820910, R9  - FFFFFFFC3C31A000, R10 - 0000000000000000
+R11  - 0000000000000007, R12 - FFFFFFFC3C400000, R13 - 0000000000000001
+R14  - 0000000000402200, R15 - 0000000000000001
+DS   - 0000000000000008, ES  - 0000000000000008, FS  - 0000000000000008
+GS   - 0000000000000008, SS  - 0000000000000008
+CR0  - 0000000080000031, CR2 - FFFFFFFC3C400000, CR3 - 0000000000800000
+CR4  - 0000000000000268, CR8 - 0000000000000000
+DR0  - 0000000000000000, DR1 - 0000000000000000, DR2 - 0000000000000000
+DR3  - 0000000000000000, DR6 - 00000000FFFF0FF0, DR7 - 0000000000000400
+GDTR - 00000000FFFFFEE0 0000000000000027, LDTR - 0000000000000000
+IDTR - 000000000081FD70 000000000000021F,   TR - 0000000000000000
+FXSAVE_STATE - 000000000081F710
+!!!! Find image based on IP(0xFFFD25D3) /home/ubuntu/tdvfuzz/tdvf/Build/IntelTdx/DEBUG_GCC5/X64/OvmfPkg/IntelTdx/Sec/SecMain/DEBUG/SecMain.dll (ImageBase=00000000FFFCC094, EntryPoint=00000000FFFD98E4) !!!!
