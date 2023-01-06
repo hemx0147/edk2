@@ -612,8 +612,15 @@ ProcessTdxHobList (
   
   //
   // Hardcode TdHobList for SDV environment
+  // Since this is before library constructors are called,
+  // we use a loop rather than CopyMem.
   //
-  CopyMem(TdHob, MAGIC_TDHOBLIST, sizeof(MAGIC_TDHOBLIST));
+  //? does TdHob space need to be allocated?
+  // CopyMem(TdHob, MAGIC_TDHOBLIST, sizeof(MAGIC_TDHOBLIST));
+  for (UINTN byte = 0; byte < sizeof(MAGIC_TDHOBLIST); byte++)
+  {
+    ((UINT8 *) TdHob)[byte] = MAGIC_TDHOBLIST[byte];
+  }
 
   //
   // Dump HobList if DEBUG enabled
