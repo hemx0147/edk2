@@ -313,6 +313,10 @@ DebugAssert (
     //
     // Generate a Breakpoint, DeadLoop, or NOP based on PCD settings
     //
+#ifdef KAFL_ENABLE
+	/* fuzz test return OK - no deadloop / breakpoint */
+	kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+#endif
     if ((PcdGet8 (PcdDebugPropertyMask) & DEBUG_PROPERTY_ASSERT_BREAKPOINT_ENABLED) != 0) {
       CpuBreakpoint ();
     } else if ((PcdGet8 (PcdDebugPropertyMask) & DEBUG_PROPERTY_ASSERT_DEADLOOP_ENABLED) != 0) {
@@ -325,6 +329,10 @@ DebugAssert (
                 Description
                 );
   }
+#ifdef KAFL_ENABLE
+	/* fuzz test return OK - no deadloop / breakpoint */
+	kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+#endif
 }
 
 /**
