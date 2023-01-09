@@ -56,7 +56,7 @@ popd > /dev/null
 echo "copying log files"
 LOG="$KAFL_WORKDIR/serial_00.log"
 [[ -f $LOG ]] || fatal "log file $LOG does not exist"
-cp $LOG ./
+cp $LOG "./serial_tdvf.log"
 
 
 
