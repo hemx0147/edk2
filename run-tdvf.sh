@@ -20,8 +20,8 @@ RUNTIME="5s"
 function rebuild_tdvf()
 {
   pushd $TDVF_ROOT > /dev/null
-  [[ "$REBUILD" -eq 1 ]] && (echo "deleting build dir" ; rm -rf Build)
-  [[ -z "$WORKSPACE" || -z "$EDK_TOOLS_PATH" || -z "$CONF_PATH" ]] && source edksetup.sh
+  [[ $REBUILD -eq 1 ]] && (echo "deleting build dir" ; rm -rf Build)
+  [[ -z $WORKSPACE || -z $EDK_TOOLS_PATH || -z $CONF_PATH ]] && source edksetup.sh
   echo "building tdvf"
   build -n $(nproc) -p OvmfPkg/IntelTdx/IntelTdxX64.dsc -t GCC5 -a X64 -D TDX_EMULATION_ENABLE=FALSE -D DEBUG_ON_SERIAL_PORT=TRUE || exit 1
   popd > /dev/null
@@ -85,10 +85,10 @@ function run_qemu()
 REBUILD=0
 BUILD=0
 QEMU=0
-if [[ "$#" -gt 0 ]]
+if [[ $# -gt 0 ]]
 then
-  [[ "$1" = "--build" ]] && BUILD=1
-  [[ "$1" = "--rebuild" ]] && REBUILD=1
+  [[ $1 = "--build" ]] && BUILD=1
+  [[ $1 = "--rebuild" ]] && REBUILD=1
   [[ $1 = "--qemu" || $2 = "--qemu" ]] && QEMU=1
 fi
 
@@ -98,7 +98,7 @@ fi
 [[ -z $KAFL_ROOT ]] && fatal "Could not find KAFL_ROOT. Verify that kAFL environment is set up."
 
 ### rebuild TDVF if necessary
-[[ "$BUILD" -eq 1 || "$REBUILD" -eq 1 ]] && rebuild_tdvf
+[[ $BUILD -eq 1 || $REBUILD -eq 1 ]] && rebuild_tdvf
 
 ### run TDVF either in qemu or Fuzzer
 [[ $QEMU -eq 1 ]] && run_qemu || run_fuzzer
